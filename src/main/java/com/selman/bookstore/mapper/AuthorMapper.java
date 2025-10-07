@@ -2,12 +2,12 @@ package com.selman.bookstore.mapper;
 
 import com.selman.bookstore.domain.Author;
 import com.selman.bookstore.dto.AuthorDTO;
+import org.springframework.stereotype.Component;
 
-import java.lang.classfile.attribute.AnnotationDefaultAttribute;
-
+@Component
 public class AuthorMapper {
 
-    public static AuthorDTO toDTO(Author author) {
+    public AuthorDTO toDTO(Author author) {
         if (author == null) {
             return null;
         }
@@ -18,7 +18,7 @@ public class AuthorMapper {
         );
     }
 
-    public static Author toEntity(AuthorDTO authorDTO) {
+    public Author toEntity(AuthorDTO authorDTO) {
         if (authorDTO == null){
             return null;
         }

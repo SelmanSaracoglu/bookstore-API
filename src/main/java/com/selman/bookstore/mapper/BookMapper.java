@@ -2,10 +2,18 @@ package com.selman.bookstore.mapper;
 
 import com.selman.bookstore.domain.Book;
 import com.selman.bookstore.dto.BookDTO;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+@Component
 public class BookMapper {
+
+    private final AuthorMapper authorMapper;
+
+    public BookMapper(AuthorMapper authorMapper) {
+        this.authorMapper = authorMapper;
+    }
 
     public BookDTO toDTO(Book book) {
         if (book == null) {
@@ -18,12 +26,12 @@ public class BookMapper {
                 book.getPublicationYear(),
                 // Author set'ini AuthorDTO set'ine dönüştür
                 book.getAuthors().stream()
-                        .map(AuthorMapper::toDTO)
+                        .map(authorMapper::toDTO)
                         .collect(Collectors.toSet())
         );
     }
 
-    public static Book toEntity(BookDTO bookDTO) {
+    public Book toEntity(BookDTO bookDTO) {
         if (bookDTO == null) {
             return null;
         }
@@ -34,7 +42,7 @@ public class BookMapper {
         book.setPublicationYear(bookDTO.publicationYear());
         // AuthorDTO set'ini Author set'ine dönüştür
         book.setAuthors(bookDTO.authors().stream()
-                .map(AuthorMapper::toEntity)
+                .map(authorMapper::toEntity)
                 .collect(Collectors.toSet())
         );
         return book;
