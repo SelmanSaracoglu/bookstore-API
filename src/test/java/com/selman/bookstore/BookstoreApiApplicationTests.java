@@ -1,4 +1,4 @@
-package com.selman.bookstore.bookstore_api;
+package com.selman.bookstore;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
