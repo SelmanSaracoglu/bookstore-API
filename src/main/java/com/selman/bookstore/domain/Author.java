@@ -20,7 +20,6 @@ public class Author {
     //Const
     public Author() {    }
 
-
     //Getter-Setter
     public Long getId() {return id;}
 
@@ -32,6 +31,12 @@ public class Author {
 
     public Set<Book> getBooks() {return books;}
     public void setBooks(Set<Book> books) {this.books = books;}
+
+
+    public void addBook(Book book) {
+        this.books.add(book);
+        book.getAuthors().add(this);
+    }
 
 
 

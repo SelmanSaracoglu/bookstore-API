@@ -45,4 +45,9 @@ public class Book {
 
     public Set<Author> getAuthors() {return authors;}
     public void setAuthors(Set<Author> authors) {this.authors = authors;}
+
+    public void addAuthor(Author author){
+        this.authors.add(author);
+        author.getBooks().add(this);
+    }
 }
