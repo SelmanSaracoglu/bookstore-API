@@ -1,6 +1,8 @@
 package com.selman.bookstore.web.rest;
 
 
+import com.selman.bookstore.dto.LoginRequestDTO;
+import com.selman.bookstore.dto.LoginResponseDTO;
 import com.selman.bookstore.dto.RegisterRequestDTO;
 import com.selman.bookstore.service.AuthService;
 import jakarta.validation.Valid;
@@ -24,5 +26,11 @@ public class AuthController {
     public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterRequestDTO registerRequest){
         authService.registerUser(registerRequest);
         return ResponseEntity.ok("User registered successfully!");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> loginUser(@Valid @RequestBody LoginRequestDTO loginRequest) {
+        String jwt = authService.loginUser(loginRequest);
+        return ResponseEntity.ok(new LoginResponseDTO(jwt));
     }
 }
