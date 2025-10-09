@@ -7,6 +7,8 @@ import com.selman.bookstore.mapper.BookMapper;
 import com.selman.bookstore.repository.BookRepository;
 import com.selman.bookstore.service.BookService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +38,10 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookDTO>> getAllBooks() {
-        List<Book> books = bookService.findAllBooks();
-        List<BookDTO> bookDTOs = books.stream()
-                .map(bookMapper::toDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(bookDTOs);
+    public ResponseEntity<Page<BookDTO>> getAllBooks(Pageable pageable) {
+        Page<Book> bookPage = bookService.findAllBooks(pageable);
+        Page<BookDTO> bookDTOPage = bookPage.map(bookMapper::toDTO);
+        return ResponseEntity.ok(bookDTOPage);
     }
 
     @GetMapping("/{id}")
