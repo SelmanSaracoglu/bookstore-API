@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: bookstore-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bookstore_db
+      - MYSQL_USER=selman
+      - MYSQL_PASSWORD=password
+    volumes:
+      - bookstore-mysql-data:/var/lib/mysql
+
+volumes:
+  bookstore-mysql-data:
