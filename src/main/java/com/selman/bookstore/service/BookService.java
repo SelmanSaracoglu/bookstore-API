@@ -44,4 +44,30 @@ public class BookService {
         }
         return bookRepository.save(book);
     }
+
+    public Optional<Book> updateBook(Long id, Book bookDetails) {
+        Optional<Book> bookOptional = bookRepository.findById(id);
+
+        if (bookOptional.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Book existingBook = bookOptional.get();
+        existingBook.setTitle(bookDetails.getTitle());
+        existingBook.setAuthors(bookDetails.getAuthors());
+        existingBook.setPublicationYear(bookDetails.getPublicationYear());
+        existingBook.setIsbn(bookDetails.getIsbn());
+
+        Book updatedBook = bookRepository.save(existingBook);
+
+        return Optional.of(updatedBook);
+    }
+
+    public boolean deleteBook(Long id) {
+        if (bookRepository.existsById(id)) {
+            bookRepository.deleteById(id);
+            return true; // Silme işlemi başarılı oldu.
+        }
+        return false; // Silinecek kitap bulunamadı.
+    }
 }
