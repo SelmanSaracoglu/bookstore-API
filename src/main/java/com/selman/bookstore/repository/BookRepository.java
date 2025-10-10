@@ -2,10 +2,11 @@ package com.selman.bookstore.repository;
 
 import com.selman.bookstore.domain.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Optional;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificationExecutor<Book> {
     /*
      Finds a book by its unique ISBN.
      Spring Data JPA will automatically generate the query for this method based on its name.

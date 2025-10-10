@@ -38,8 +38,11 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<BookDTO>> getAllBooks(Pageable pageable) {
-        Page<Book> bookPage = bookService.findAllBooks(pageable);
+    public ResponseEntity<Page<BookDTO>> getAllBooks(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Integer publicationYear,
+            Pageable pageable) {
+        Page<Book> bookPage = bookService.findAllBooks(title, publicationYear, pageable);
         Page<BookDTO> bookDTOPage = bookPage.map(bookMapper::toDTO);
         return ResponseEntity.ok(bookDTOPage);
     }
