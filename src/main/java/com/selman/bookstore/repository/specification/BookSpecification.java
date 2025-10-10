@@ -21,7 +21,7 @@ public class BookSpecification {
             if (year == null) {
                 return criteriaBuilder.conjunction();
             }
-            return criteriaBuilder.equal(root.get("publicationTear"), year);
+            return criteriaBuilder.equal(root.get("publicationYear"), year);
         };
     }
 }
