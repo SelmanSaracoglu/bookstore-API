@@ -55,5 +55,35 @@ public class BookController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @Valid @RequestBody BookDTO bookDTO) {
+        // Gelen DTO'yu Entity'e çeviriyoruz.
+        Book bookDetails = bookMapper.toEntity(bookDTO);
+
+        // Servis metodunu çağırarak kitabı güncelliyoruz.
+        Optional<Book> updatedBookOptional = bookService.updateBook(id,bookDetails);
+
+        // Servisten dönen sonuca göre yanıt oluşturuyoruz.
+        // Eğer kitap güncellendiyse 200 OK ve güncel DTO'yu, bulunamadıysa 404 Not Found dönüyoruz.
+        return updatedBookOptional
+                .map(updatedBook -> ResponseEntity.ok(bookMapper.toDTO(updatedBook)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        // Servis metodunu çağırarak kitabı siliyoruz.
+        boolean isDeleted = bookService.deleteBook(id);
+
+        if (isDeleted) {
+            // Silme başarılıysa, standartlara uygun olarak 204 No Content yanıtı dönüyoruz.
+            // Bu yanıtın body'si olmaz.
+            return ResponseEntity.noContent().build();
+        } else {
+            // Kitap bulunamadıysa 404 Not Found dönüyoruz.
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }
